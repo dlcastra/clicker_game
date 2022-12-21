@@ -19,12 +19,32 @@ ARIAL_64 = pygame.font.Font(ARIAL_FONT_PATH, 64)
 ARIAL_32 = pygame.font.Font(ARIAL_FONT_PATH, 32)
 
 IMAGE = pygame.image.load('pablo.png')
-IMAGE = pygame.transform.scale(IMAGE ,(100,100))
+IMAGE = pygame.transform.scale(IMAGE ,(250,250))
 target_rect = IMAGE.get_rect()
 
+score = 0
 run = True
 while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
 
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == pygame.BUTTON_LEFT:
+                score += 1
+
+    clock.tick(FPS)
+    screen.fill((123, 104, 238))
+    score_surface = ARIAL_64.render(str(score), True, (0, 0, 0))
+    score_rect = score_surface.get_rect()
+
+    score_rect.midtop = SCREEN_TOP
+    target_rect.midtop = SCREEN_CENTER
+    screen.blit(IMAGE, target_rect)
+    screen.blit(score_surface, score_rect)
+
+
+    pygame.display.flip()
+
+
+pygame.quit()
