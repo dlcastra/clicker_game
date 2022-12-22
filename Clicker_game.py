@@ -3,6 +3,7 @@ import random
 
 pygame.init()
 pygame.font.init()
+pygame.display.set_caption('CLICK ON PABLO')
 
 WIDTH = 1000
 HEIGHT = 600
@@ -23,6 +24,8 @@ IMAGE = pygame.transform.scale(IMAGE ,(250,250))
 target_rect = IMAGE.get_rect()
 
 score = 0
+font = pygame.font.Font(None, 36)
+
 run = True
 while run:
     for event in pygame.event.get():
@@ -31,7 +34,11 @@ while run:
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == pygame.BUTTON_LEFT:
-                score += 1
+                if target_rect.collidepoint(event.pos):
+                    score += 1
+
+                else:
+                    score -= 1
 
     clock.tick(FPS)
     screen.fill((123, 104, 238))
@@ -43,8 +50,7 @@ while run:
     screen.blit(IMAGE, target_rect)
     screen.blit(score_surface, score_rect)
 
-
     pygame.display.flip()
-
-
 pygame.quit()
+
+
